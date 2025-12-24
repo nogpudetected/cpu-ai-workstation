@@ -130,31 +130,6 @@ TODO:
 - Explain voice samples ingestion and selection workflow
 
 
-## 🧪 Usage Examples
-
-### Image Generation
-
-<screenshot>
-
-### Text-to-Speech
-
-<screenshot>
-
-...
-
----
-
-## ⚙️ Configuration
-
-### Environment Variables
-
-```
-SD_MODEL_PATH=./models/sd/
-TTS_MODEL_PATH=./models/chatterbox/
-BACKEND_PORT_SD=5001
-BACKEND_PORT_TTS=5002
-```
-
 ## 🧭 Roadmap
 
 * [X] CPU-only Docker support

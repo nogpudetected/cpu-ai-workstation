@@ -1,0 +1,45 @@
+services:
+  ollama:
+    container_name: ollama
+    image: ollama/ollama:0.13.1-rc0
+    ports: 
+      - "61434:11434"
+    volumes:
+      - ./docker-volumes/ollama:/root/.ollama
+    restart: always
+
+  openwebui:
+    container_name: openwebui
+    image: ghcr.io/open-webui/open-webui:git-b32f781-cuda126@sha256:1628e0bee7a76a05b60e5dc9a254370327828d03ebbbd5528a45ffc921012f00
+    ports:
+      - "53000:8080"
+    env_file:
+      - ./.openwebui.env
+    volumes:
+      - ./docker-volumes/openwebui:/app/backend/data
+    restart: always
+
+  fast-chatterbox:
+    container_name: fast-chatterbox
+    build:
+      context: ./fast-chatterbox
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "58000:8000"
+    volumes:
+      - ./docker-volumes/fast-chatterbox/speakers:/app/speakers
+      - ./docker-volumes/openwebui/uploads:/app/uploads
+    
+  fast-a1111:
+    container_name: fast-a1111
+    build:
+      context: ./fast-a1111
+      dockerfile: Dockerfile
+    ports:
+      - "57860:7860"
+    volumes:
+      - ./resources/fast-a1111/models:/app/models
+      - ./docker-volumes/fast-a1111:/app/data
+    restart: always
+

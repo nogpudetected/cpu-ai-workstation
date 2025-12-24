@@ -68,10 +68,67 @@ docker compose up --build -d
 cd backends/sd_cpu_backend
 pip install -r requirements.txt
 ```
+
 ## ⚙️ Configuration
 
-### Install Ollama models
-...
+### Install Ollama
+
+1. Install **Ollama** on the host system following the official instructions:
+   https://ollama.com
+
+2. Pull a recommended model (CPU-friendly and well-supported):
+
+```bash
+ollama pull llama3.2
+```
+
+3. Make sure Ollama is running and reachable by OpenWebUI.
+   The default Ollama endpoint is:
+
+```
+http://ollama:11434
+```
+
+4. Configure OpenWebUI (or docker-compose) to use this endpoint as the LLM backend.
+
+---
+
+### Image Generation Configuration
+
+To enable **image generation** through OpenWebUI using the AUTOMATIC1111-compatible backend, configure the following environment variables:
+
+```
+ENABLE_IMAGE_GENERATION=true
+IMAGE_GENERATION_ENGINE=automatic1111
+IMAGE_GENERATION_MODEL=<your_model>
+IMAGE_SIZE=512x512
+IMAGE_STEPS=4
+AUTOMATIC1111_BASE_URL=http://fast-a1111:7860
+AUTOMATIC1111_API_AUTH=none
+```
+
+Once configured, OpenWebUI will expose the **image generation** feature, allowing you to generate images directly from text prompts using the built-in image generation function.
+
+---
+
+### Text-to-Speech (TTS) Configuration
+
+To enable **text-to-speech** support via the Chatterbox backend, configure the following environment variables:
+
+```
+AUDIO_TTS_ENGINE=openai
+AUDIO_TTS_OPENAI_API_BASE_URL=http://fast-chatterbox:8000/v1
+AUDIO_TTS_OPENAI_API_KEY=none
+```
+
+After configuration, OpenWebUI will allow audio generation from text responses using the integrated TTS features.
+
+#### Voice Cloning
+
+TODO:
+- Add documentation for zero-shot voice cloning
+- Explain voice samples ingestion and selection workflow
+
 
 ## 🧪 Usage Examples
 
@@ -84,7 +141,7 @@ pip install -r requirements.txt
 <screenshot>
 
 ...
- 
+
 ---
 
 ## ⚙️ Configuration
